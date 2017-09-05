@@ -69,7 +69,7 @@ class YouTube {
      */
     getVideoByID(id, options = {}) {
         return this.request(Constants.ENDPOINTS.Videos, Object.assign(options, { id, part: Constants.PARTS.Videos }))
-            .then(result => new Video(this, result.items[0]));
+            .then(result => result.items.length ? new Video(this, result.items[0]) : null);
     }
 
     /**
@@ -104,7 +104,7 @@ class YouTube {
      */
     getPlaylistByID(id, options = {}) {
         return this.request(Constants.ENDPOINTS.Playlists, Object.assign(options, { id, part: Constants.PARTS.Playlists }))
-            .then(result => new Playlist(this, result.items[0]));
+            .then(result => result.items.length ? new Playlist(this, result.items[0]) : null);
     }
 
     /**
@@ -139,7 +139,7 @@ class YouTube {
      */
     getChannelByID(id, options = {}) {
         return this.request(Constants.ENDPOINTS.Channels, Object.assign(options, { id, part: Constants.PARTS.Channels }))
-            .then(result => new Channel(this, result.items[0]));
+            .then(result => result.items.length ? new Channel(this, result.items[0]) : null);
     }
 
     /**
