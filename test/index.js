@@ -86,6 +86,10 @@ describe('Video', function() {
             return yt.getVideo('https://www.youtube.com/watch?v=jskadhuiusdaksudkha').then(...util.throws);
         });
 
+        it('rejects when not a YouTube video URL', function() {
+            return yt.getVideo('https://www.youtube.com').then(...util.throws);
+        });
+
         it('rejects when invalid ID', function() {
             return yt.getVideoByID('not an ID').then(...util.throws);
         });
@@ -114,6 +118,10 @@ describe('Playlist', function() {
 
         it('rejects when invalid URL', function() {
             return yt.getPlaylist('https://www.youtube.com/playlist?list=iasodjasiodjujasidhaisudhiasdaksjdiunkasd').then(...util.throws);
+        });
+
+        it('rejects when not a YouTube playlist URL', function() {
+            return yt.getPlaylist('https://www.youtube.com').then(...util.throws);
         });
 
         it('rejects when invalid ID', function() {
@@ -177,6 +185,10 @@ describe('Channel', function() {
 
         it('rejects when invalid URL', function() {
             return yt.getChannel('https://www.youtube.com/channel/asuidahsduhkuhisoaduhioj').then(...util.throws);
+        });
+
+        it('rejects when not a YouTube channel URL', function() {
+            return yt.getChannel('https://www.youtube.com').then(...util.throws);
         });
 
         it('rejects when invalid ID', function() {

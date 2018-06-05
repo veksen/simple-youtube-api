@@ -1,5 +1,6 @@
 const fetch = require('cross-fetch');
 const { stringify } = require('querystring');
+const RequestError = require('./Error');
 const Constants = require('./util/Constants');
 
 class Request {
@@ -14,13 +15,13 @@ class Request {
      * @returns {Promise<object>}
      */
     make(endpoint, qs = {}) {
-        qs = stringify(Object.assign({ key: this.youtube.key }, qs));
-        return fetch(encodeURI(`https://www.googleapis.com/youtube/v3/${endpoint}${qs.length ? `?${qs}` : ''}`))
-            .then(result => result.json())
-            .then(result => {
-                if (result.error) return Promise.reject(result.error);
-                return result;
-            });
+        endpoint = this._makeEndpoint(endpoint, qs);
+        return fetch(endpoint).then(response => {
+            return response.json().then(json => {
+                if (response.ok) return json;
+                return Promise.reject(new RequestError(endpoint, json.error));
+            }, () => response.text().then(text => new RequestError(endpoint, text)));
+        });
     }
 
     /**
@@ -31,9 +32,12 @@ class Request {
      */
     getResource(type, qs = {}) {
         qs = Object.assign({ part: Constants.PARTS[type] }, qs);
-        return this.make(Constants.ENDPOINTS[type], qs).then(result =>
-            result.items.length ? result.items[0] : Promise.reject(new Error(`resource ${result.kind} not found`))
-        );
+        const endpoint = Constants.ENDPOINTS[type];
+
+        return this.make(endpoint, qs).then(result => {
+            if (result.items.length) return result.items[0];
+            return Promise.reject(new RequestError(this._makeEndpoint(endpoint, qs), `resource ${result.kind} not found`));
+        });
     }
 
     /**
@@ -95,6 +99,11 @@ class Request {
             if(result.nextPageToken && limit !== count) return this.getPaginated(endpoint, count - limit, options, results, result.nextPageToken);
             return results;
         });
+    }
+
+    _makeEndpoint(endpoint, qs) {
+        qs = stringify(Object.assign({ key: this.youtube.key }, qs));
+        return `https://www.googleapis.com/youtube/v3/${endpoint}?${qs}`;
     }
 }
 
