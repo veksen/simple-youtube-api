@@ -1,4 +1,5 @@
 const fetch = require('cross-fetch');
+const { stringify } = require('querystring');
 const Constants = require('./util/Constants');
 
 class Request {
@@ -13,9 +14,8 @@ class Request {
      * @returns {Promise<object>}
      */
     make(endpoint, qs = {}) {
-        qs = Object.assign({ key: this.youtube.key }, qs);
-        const params = Object.keys(qs).filter(k => qs[k]).map(k => `${k}=${qs[k]}`);
-        return fetch(encodeURI(`https://www.googleapis.com/youtube/v3/${endpoint}${params.length ? `?${params.join('&')}` : ''}`))
+        qs = stringify(Object.assign({ key: this.youtube.key }, qs));
+        return fetch(encodeURI(`https://www.googleapis.com/youtube/v3/${endpoint}${qs.length ? `?${qs}` : ''}`))
             .then(result => result.json())
             .then(result => {
                 if (result.error) return Promise.reject(result.error);

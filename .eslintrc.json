@@ -9,6 +9,7 @@
     },
     "rules": {
         "no-console": "error",
+        "no-undef": "error",
         "no-unused-vars": "warn",
         "indent": [
             "error",
