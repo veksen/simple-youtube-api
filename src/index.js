@@ -1,11 +1,11 @@
-const Request = require('./Request');
+import Request from './Request';
 
-const Video = require('./structures/Video');
-const Playlist = require('./structures/Playlist');
-const Channel = require('./structures/Channel');
+import Video from './structures/Video';
+import Playlist from './structures/Playlist';
+import Channel from './structures/Channel';
 
-const util = require('./util');
-const Constants = require('./util/Constants');
+import util from './util';
+import Constants from './util/Constants';
 
 /**
  * Information about a thumbnail
@@ -218,9 +218,9 @@ class YouTube {
     }
 }
 
-YouTube.Video = Video;
-YouTube.Playlist = Playlist;
-YouTube.Channel = Channel;
-YouTube.util = util;
+export Video;
+export Playlist;
+export Channel;
+export util;
 
-module.exports = YouTube;
+export default YouTube;

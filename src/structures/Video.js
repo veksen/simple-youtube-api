@@ -1,7 +1,7 @@
-const duration = require('iso8601-duration');
-const { parseURL } = require('../util');
-const Constants = require('../util/Constants');
-const Channel = require('./Channel');
+import duration from 'iso8601-duration';
+import { parseURL } from '../util';
+import Constants from '../util/Constants';
+import Channel from './Channel';
 
 /** Represents a YouTube video */
 class Video {
@@ -178,4 +178,4 @@ class Video {
     }
 }
 
-module.exports = Video;
+export default Video;

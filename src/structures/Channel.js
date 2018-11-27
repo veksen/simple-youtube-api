@@ -1,5 +1,5 @@
-const { parseURL } = require('../util');
-const Constants = require('../util/Constants');
+import { parseURL } from '../util';
+import Constants from '../util/Constants';
 
 /**
  * Represents a YouTube channel
@@ -209,4 +209,4 @@ class Channel {
     }
 }
 
-module.exports = Channel;
+export default Channel;

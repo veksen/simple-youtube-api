@@ -1,4 +1,4 @@
-exports.PARTS = {
+export PARTS = {
     Search: 'snippet',
     Videos: 'snippet,contentDetails',
     Playlists: 'snippet',
@@ -6,7 +6,7 @@ exports.PARTS = {
     Channels: 'snippet'
 };
 
-exports.KINDS = {
+export KINDS = {
     Video: 'youtube#video',
     PlaylistItem: 'youtube#playlistItem',
     Playlist: 'youtube#playlist',
@@ -14,7 +14,7 @@ exports.KINDS = {
     Channel: 'youtube#channel'
 };
 
-exports.ENDPOINTS = {
+export ENDPOINTS = {
     PlaylistItems: 'playlistItems',
     Channels: 'channels',
     Videos: 'videos',
