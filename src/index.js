@@ -218,9 +218,9 @@ class YouTube {
     }
 }
 
-export Video;
-export Playlist;
-export Channel;
-export util;
+YouTube.Video = Video;
+YouTube.Playlist = Playlist;
+YouTube.Channel = Channel;
+YouTube.util = util;
 
-export default YouTube;
+export YouTube;
